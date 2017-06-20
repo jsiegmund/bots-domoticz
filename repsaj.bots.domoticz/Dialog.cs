@@ -41,7 +41,7 @@ namespace FunctionsLibraryProject
             var device = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Device");
             var room = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Room");
 
-            string uri = String.Format("domo://o={0},d={1},r={2}", operation, device, room);
+            string uri = String.Format("domoticz:?o={0}&d={1}&r={2}", operation, device, room);
 
             var message = context.MakeMessage() as IMessageActivity;
             message.ChannelData = JObject.FromObject(new
