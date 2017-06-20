@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Azure;
@@ -25,13 +26,6 @@ namespace FunctionsLibraryProject
             reply.Speak = "This is the text that Cortana will say.";
             await context.PostAsync(reply);
 
-            //var message = context.MakeMessage() as IMessageActivity;
-            //message.ChannelData = JObject.FromObject(new
-            //{
-            //    action = new { type = "LaunchUri", uri = "https://bing.com" }
-            //});
-            //await context.PostAsync(message);
-
             await context.PostAsync($"You have reached the none intent. You said: {result.Query}"); //
             context.Wait(MessageReceived);
         }
@@ -42,6 +36,19 @@ namespace FunctionsLibraryProject
             IMessageActivity reply = context.MakeMessage();
             reply.Text = "I'm turning on things";
             reply.Speak = "Ok, switching on!";
+
+            var operation = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Operation");
+            var device = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Device");
+            var room = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Room");
+
+            string uri = String.Format("domo://o={0},d={1},r={2}", operation, device, room);
+
+            var message = context.MakeMessage() as IMessageActivity;
+            message.ChannelData = JObject.FromObject(new
+            {
+                action = new { type = "LaunchUri", uri = uri }
+            });
+            await context.PostAsync(message);
 
             await context.PostAsync(reply);
             context.Wait(MessageReceived);
