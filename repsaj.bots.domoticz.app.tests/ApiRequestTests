@@ -1,0 +1,13 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Repsaj.Bots.Domoticz.App.tests
+{
+    [TestClass]
+    public class ApiRequestTests
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+        }
+    }
+}
