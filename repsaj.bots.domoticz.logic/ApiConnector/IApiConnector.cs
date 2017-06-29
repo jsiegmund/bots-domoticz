@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.ApiConnector
+namespace Repsaj.Bots.Domoticz.Logic.ApiConnector
 {
     public interface IApiConnector
     {

@@ -140,14 +140,17 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>1.4.1</Version>
+    </PackageReference>
     <PackageReference Include="MvvmLight">
       <Version>5.3.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\repsaj.bots.domoticz.app.logic\repsaj.bots.domoticz.app.logic.csproj">
-      <Project>{a7333738-ad5e-4027-8473-1bdb25e5e72a}</Project>
-      <Name>repsaj.bots.domoticz.app.logic</Name>
+    <ProjectReference Include="..\repsaj.bots.domoticz.logic\repsaj.bots.domoticz.logic.csproj">
+      <Project>{904ec1b0-9e15-405c-9d1e-64c67a9b96ac}</Project>
+      <Name>repsaj.bots.domoticz.logic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

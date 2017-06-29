@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.ApiConnector
+namespace Repsaj.Bots.Domoticz.Logic.ApiConnector
 {
     public class ApiConnector : IApiConnector
     {

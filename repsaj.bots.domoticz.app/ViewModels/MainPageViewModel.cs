@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Repsaj.Bots.Domoticz.App.Logic.ApiConnector;
+using Repsaj.Bots.Domoticz.Logic.ApiConnector;
 using Repsaj.Bots.Domoticz.App.Logic.Helpers;
 using Repsaj.Bots.Domoticz.App.Logic.Logging;
 using Repsaj.Bots.Domoticz.App.Logic.Models;

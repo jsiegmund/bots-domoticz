@@ -1,0 +1,25 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=repsajbotsdomoticz2hefg7;AccountKey=8tZ2CkFGgN0S0ydgRWHmR3VETGhoAC8yglI0QCSL8xExF4k8s9Z3sOOwxYZM3DLdjctiaQPQOSWrk1pgNXcakQ==;",
+    "AzureWebJobsDashboard": "DefaultEndpointsProtocol=https;AccountName=repsajbotsdomoticz2hefg7;AccountKey=8tZ2CkFGgN0S0ydgRWHmR3VETGhoAC8yglI0QCSL8xExF4k8s9Z3sOOwxYZM3DLdjctiaQPQOSWrk1pgNXcakQ==;",
+    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING_TEMP": "DefaultEndpointsProtocol=https;AccountName=repsajbotsdomoticz2hefg7;AccountKey=8tZ2CkFGgN0S0ydgRWHmR3VETGhoAC8yglI0QCSL8xExF4k8s9Z3sOOwxYZM3DLdjctiaQPQOSWrk1pgNXcakQ==;",
+    "FUNCTIONS_EXTENSION_VERSION": "~1",
+    "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
+    "BotId": "repsaj-bots-domoticz",
+    "BotEnv": "dev",
+    "BotStateEndpoint": "",
+    "BotOpenIdMetadata": "",
+    "MicrosoftAppId": "482ef61b-36b5-42bb-9b49-e62bb88efe88",
+    "MicrosoftAppPassword": "rzzram0nU2eUqSR5sgyEiJH",
+    "SCM_POST_DEPLOYMENT_ACTIONS_PATH": "PostDeployScripts",
+    "BotDevAppInsightKey": "f7c8c6c4-d8b1-44bb-acd7-ff11c57a655c",
+    "BotDevAppInsightsKey": "f7c8c6c4-d8b1-44bb-acd7-ff11c57a655c",
+    "BotDevAppInsightsName": "repsaj-bots-domoticz2hefg7",
+    "BotDevAppInsightsAppId": "22e70723-1fd7-4dc1-b0df-fcb40adc18b9",
+    "LuisAppId": "f2d4647d-aa1a-449b-8509-238bb4f337b5",
+    "LuisAPIKey": "167210bb1d434a8a8cac6ab404881e47",
+    "LuisAPIHostName": "westus.api.cognitive.microsoft.com"
+  },
+  "ConnectionStrings": {}
+}

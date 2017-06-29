@@ -1,4 +1,4 @@
-﻿using Repsaj.Bots.Domoticz.App.Logic.ApiConnector;
+﻿using Repsaj.Bots.Domoticz.Logic.ApiConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;

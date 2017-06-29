@@ -2,7 +2,7 @@
 using Autofac.Extras.CommonServiceLocator;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using Repsaj.Bots.Domoticz.App.Logic.ApiConnector;
+using Repsaj.Bots.Domoticz.Logic.ApiConnector;
 using Repsaj.Bots.Domoticz.App.Logic.Logging;
 using Repsaj.Bots.Domoticz.App.ViewModels;
 using System;
