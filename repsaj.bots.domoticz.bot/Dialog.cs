@@ -8,8 +8,9 @@ using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json.Linq;
+using Repsaj.Bots.Domoticz.Bot.Intents;
 
-namespace FunctionsLibraryProject
+namespace Repsaj.Bots.Domoticz.Bot
 {
     [Serializable]
     public class Dialog : LuisDialog<object>
@@ -26,7 +27,7 @@ namespace FunctionsLibraryProject
             reply.Speak = "This is the text that Cortana will say.";
             await context.PostAsync(reply);
 
-            await context.PostAsync($"You have reached the none intent. You said: {result.Query}"); //
+            await context.PostAsync($"You have reached the none intent. You said: {result.Query}");
             context.Wait(MessageReceived);
         }
 
@@ -37,16 +38,14 @@ namespace FunctionsLibraryProject
             reply.Text = "I'm turning on things";
             reply.Speak = "Ok, switching on!";
 
-            var operation = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Operation");
-            var device = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Device");
-            var room = result.Entities.SingleOrDefault(e => e.Type == "HomeAutomation.Room");
 
-            string uri = String.Format("domoticz:?o={0}&d={1}&r={2}", operation, device, room);
+            IIntentHandler intentHandler = new Intents.IntentHandler();     // TODO: replace by dependency injection
+            Uri gatewayUri = intentHandler.HandleTurnOn(result);
 
             var message = context.MakeMessage() as IMessageActivity;
             message.ChannelData = JObject.FromObject(new
             {
-                action = new { type = "LaunchUri", uri = uri }
+                action = new { type = "LaunchUri", uri = gatewayUri.ToString() }
             });
             await context.PostAsync(message);
 

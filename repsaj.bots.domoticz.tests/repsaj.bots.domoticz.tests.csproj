@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\repsaj.bots.domoticz.app.logic\repsaj.bots.domoticz.app.logic.csproj" />
+    <ProjectReference Include="..\repsaj.bots.domoticz.bot\repsaj.bots.domoticz.bot.csproj" />
     <ProjectReference Include="..\repsaj.bots.domoticz.logic\repsaj.bots.domoticz.logic.csproj" />
   </ItemGroup>
 

@@ -11,10 +11,12 @@ using System.Net.Http;
 using Microsoft.Azure.WebJobs.Host;
 using System.Linq;
 
-namespace FunctionsLibraryProject
+namespace Repsaj.Bots.Domoticz.Bot
 {
     public class DialogEntryPoint
     {
+        //static ServiceLocator _locator = new ServiceLocator();
+
         public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");

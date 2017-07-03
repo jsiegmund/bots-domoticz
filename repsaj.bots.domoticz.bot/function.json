@@ -1,6 +1,6 @@
 ﻿{
   "disabled": false,
-  "scriptFile": "..\\bin\\repsaj.bots.domoticz.bot.dll", 
+  "scriptFile": "..\\bin\\repsaj.bots.domoticz.bot.dll",
   "entryPoint": "Repsaj.Bots.Domoticz.Bot.DialogEntryPoint.Run",
   "bindings": [
     {
