@@ -1,4 +1,5 @@
 ﻿using Microsoft.Bot.Builder.Luis.Models;
+using Repsaj.Bots.Domoticz.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace Repsaj.Bots.Domoticz.Bot.Intents
 {
     public interface IIntentHandler
     {
-        Uri HandleTurnOn(LuisResult result);
-        Uri HandleTurnOff(LuisResult result);
-        Uri HandleScene(LuisResult result);
+        SwitchRequestModel HandleTurnOn(LuisResult result);
+        SwitchRequestModel HandleTurnOff(LuisResult result);
+        SceneRequestModel HandleScene(LuisResult result);
     }
 }

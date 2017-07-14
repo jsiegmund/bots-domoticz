@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.Logging
+namespace Repsaj.Bots.Domoticz.Logic.Logging
 {
     public sealed class LogEventSource : EventSource
     {

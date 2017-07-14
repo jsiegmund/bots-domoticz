@@ -1,7 +1,7 @@
 ﻿using Microsoft.Bot.Builder.Luis.Models;
-using Repsaj.Bots.Domoticz.App.Logic.Helpers;
-using Repsaj.Bots.Domoticz.App.Logic.Models;
-using Repsaj.Bots.Domoticz.Logic.ApiConnector;
+using Repsaj.Bots.Domoticz.Logic.Helpers;
+using Repsaj.Bots.Domoticz.Logic.Models;
+using Repsaj.Bots.Domoticz.Logic.Domoticz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,23 +13,43 @@ namespace Repsaj.Bots.Domoticz.Bot.Intents
     {
         string _baseUrl = "domoticz:";
 
-        public Uri HandleScene(LuisResult result)
+        public SceneRequestModel HandleScene(LuisResult luisResult)
         {
-            throw new NotImplementedException();
+            var scene = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Scene);
+
+            SceneRequestModel model = new SceneRequestModel();
+
+            if (scene != null)
+                model.SceneName = scene.Entity;
+
+            return model;
         }
 
-        public Uri HandleTurnOff(LuisResult result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Uri HandleTurnOn(LuisResult luisResult)
+        public SwitchRequestModel HandleTurnOff(LuisResult luisResult)
         {
             var operation = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Operation);
             var device = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Device);
             var room = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Room);
 
-            TurnOnRequestModel model = new TurnOnRequestModel();
+            SwitchRequestModel model = new SwitchRequestModel();
+
+            model.On = false;
+
+            if (room != null)
+                model.Room = room.Entity;
+            if (device != null)
+                model.Device = device.Entity;
+
+            return model;
+        }
+
+        public SwitchRequestModel HandleTurnOn(LuisResult luisResult)
+        {
+            var operation = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Operation);
+            var device = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Device);
+            var room = luisResult.Entities.SingleOrDefault(e => e.Type == EntityTypes.HomeAutomation.Room);
+
+            SwitchRequestModel model = new SwitchRequestModel();
 
             model.On = true;
 
@@ -38,18 +58,12 @@ namespace Repsaj.Bots.Domoticz.Bot.Intents
             if (device != null)
                 model.Device = device.Entity;
 
-            return ConstructUri(GatewayOperations.TurnOn, model);
+            return model;
         }
 
         internal bool TranslateOnToBool(string input)
         {
             return String.Equals("on", input, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        internal Uri ConstructUri(string mode, object payload)
-        {
-            string payloadString = Encoding.Base64Encode(payload);
-            return new Uri($"?mode={mode}&payload={_baseUrl}");
         }
     }
 }

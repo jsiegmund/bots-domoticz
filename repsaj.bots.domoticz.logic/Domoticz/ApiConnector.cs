@@ -1,5 +1,5 @@
-﻿using Repsaj.Bots.Domoticz.App.Logic.Models;
-using Repsaj.Bots.Domoticz.App.Logic.Exceptions;
+﻿using Repsaj.Bots.Domoticz.Logic.Models;
+using Repsaj.Bots.Domoticz.Logic.Exceptions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -9,39 +9,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Repsaj.Bots.Domoticz.Logic.ApiConnector
+namespace Repsaj.Bots.Domoticz.Logic.Domoticz
 {
     public class ApiConnector : IApiConnector
     {
-        string _baseUri = "<<URL>>";
-        string _passwordString = "<<USER:PASS_BASE64>>";
+        IDomoticzSettingsService _settingsService;
 
-        public ApiConnector()
+        public ApiConnector(IDomoticzSettingsService settings)
         {
+            _settingsService = settings;
         }
 
-        /// <summary>
-        /// /json.htm?type=command&param=getlightswitches
-        /// </summary>
-        /// <returns></returns>
-        public Task<IEnumerable<LightSwitchModel>> GetLightSwitches()
-        {
-            Uri requestUri = ApiRequests.GetLightSwitches(_baseUri);
-            return GetRequest<LightSwitchModel>(requestUri);
-        }
-
-        public Task<IEnumerable<SceneModel>> GetScenes()
-        {
-            Uri requestUri = ApiRequests.GetScenes(_baseUri);
-            return GetRequest<SceneModel>(requestUri);
-        }
-
-        private async Task<IEnumerable<T>> GetRequest<T>(Uri requestUri)
+        public async Task<IEnumerable<T>> GetRequest<T>(Uri requestUri)
         {
             try
             {
+                DomoticzSettingsModel settings = _settingsService.GetSettings();
+
                 HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _passwordString);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", settings.AccessToken);
                 HttpResponseMessage response = await client.GetAsync(requestUri);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -61,12 +47,14 @@ namespace Repsaj.Bots.Domoticz.Logic.ApiConnector
             }
         }
 
-        private async Task<GenericResponseModel> SendRequest(Uri requestUri)
+        public async Task<GenericResponseModel> SendRequest(Uri requestUri)
         {
             try
             {
+                DomoticzSettingsModel settings = _settingsService.GetSettings();
+
                 HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _passwordString);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", settings.AccessToken);
 
                 HttpResponseMessage response = await client.GetAsync(requestUri);
 
@@ -89,25 +77,11 @@ namespace Repsaj.Bots.Domoticz.Logic.ApiConnector
 
         private Uri BuildUri(IDictionary<string, string> parameters)
         {
-            string requestStr = Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(_baseUri, parameters);
+            DomoticzSettingsModel settings = _settingsService.GetSettings();
+
+            string requestStr = Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(settings.BaseUri, parameters);
             Uri requestUri = new Uri(requestStr);
             return requestUri;
-        }
-
-        public async Task RunCommand(string command)
-        {
-            Uri commandUri = new Uri(command);
-            var queryParams = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(commandUri.Query);
-            var queryParamsStr = queryParams.Select(s => new { param = s.Key, value = s.Value.ToString() })
-                                            .ToDictionary(s => s.param, s => s.value);
-
-            string requestStr = Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(_baseUri, queryParamsStr);
-            Uri requestUri = new Uri(requestStr);
-
-            var response = await SendRequest(requestUri);
-
-            if (response.Status != "OK")
-                throw new DomoticzApiException($"The Domoticz API returned an error: {response.Title}");
         }
     }
 }

@@ -9,6 +9,8 @@ using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json.Linq;
 using Repsaj.Bots.Domoticz.Bot.Intents;
+using Repsaj.Bots.Domoticz.Logic.Models;
+using Repsaj.Bots.Domoticz.Logic.Helpers;
 
 namespace Repsaj.Bots.Domoticz.Bot
 {
@@ -38,9 +40,9 @@ namespace Repsaj.Bots.Domoticz.Bot
             reply.Text = "I'm turning on things";
             reply.Speak = "Ok, switching on!";
 
-
             IIntentHandler intentHandler = new Intents.IntentHandler();     // TODO: replace by dependency injection
-            Uri gatewayUri = intentHandler.HandleTurnOn(result);
+            SwitchRequestModel model = intentHandler.HandleTurnOn(result);
+            Uri gatewayUri = RequestUriHelper.ConstructUri(model);
 
             var message = context.MakeMessage() as IMessageActivity;
             message.ChannelData = JObject.FromObject(new

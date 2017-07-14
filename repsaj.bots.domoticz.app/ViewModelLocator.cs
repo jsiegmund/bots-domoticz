@@ -2,14 +2,15 @@
 using Autofac.Extras.CommonServiceLocator;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using Repsaj.Bots.Domoticz.Logic.ApiConnector;
-using Repsaj.Bots.Domoticz.App.Logic.Logging;
+using Repsaj.Bots.Domoticz.Logic.Domoticz;
+using Repsaj.Bots.Domoticz.Logic.Logging;
 using Repsaj.Bots.Domoticz.App.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Repsaj.Bots.Domoticz.Logic.RequestHandler;
 
 namespace Repsaj.Bots.Domoticz.App
 {
@@ -25,9 +26,15 @@ namespace Repsaj.Bots.Domoticz.App
             var nav = new NavigationService();
             builder.RegisterInstance<INavigationService>(nav);
 
+            // Register the settings object
+            var settings = new DomoticzSettingsService();
+            builder.RegisterInstance<IDomoticzSettingsService>(settings);
+
             // Register types 
             builder.RegisterType<Services.DialogService>().As<IDialogService>().SingleInstance();
             builder.RegisterType<ApiConnector>().As<IApiConnector>().SingleInstance();
+            builder.RegisterType<RequestHandler>().As<IRequestHandler>().SingleInstance();
+            builder.RegisterType<DomoticzManager>().As<IDomoticzManager>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<MainPageViewModel>().SingleInstance();

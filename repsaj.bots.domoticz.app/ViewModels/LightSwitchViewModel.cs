@@ -1,5 +1,5 @@
-﻿using Repsaj.Bots.Domoticz.App.Logic.Helpers;
-using Repsaj.Bots.Domoticz.App.Logic.Models;
+﻿using Repsaj.Bots.Domoticz.Logic.Helpers;
+using Repsaj.Bots.Domoticz.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

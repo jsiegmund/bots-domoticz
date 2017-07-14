@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Repsaj.Bots.Domoticz.Logic.ApiConnector
+namespace Repsaj.Bots.Domoticz.Logic.Domoticz
 {
     public static class ApiRequests
     {

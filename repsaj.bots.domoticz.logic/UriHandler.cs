@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 
-namespace Repsaj.Bots.Domoticz.App.Logic
+namespace Repsaj.Bots.Domoticz.Logic
 {
     public static class UriHandler
     {

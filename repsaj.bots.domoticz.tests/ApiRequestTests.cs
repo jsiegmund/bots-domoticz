@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Repsaj.Bots.Domoticz.Logic.ApiConnector;
+using Repsaj.Bots.Domoticz.Logic.Domoticz;
 using System;
 
 namespace Repsaj.Bots.Domoticz.Tests

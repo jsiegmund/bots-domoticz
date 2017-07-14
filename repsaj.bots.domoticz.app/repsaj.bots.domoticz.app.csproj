@@ -96,6 +96,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Design\ApiConnector.cs" />
+    <Compile Include="Design\DomoticzManager.cs" />
+    <Compile Include="Design\RequestHandler.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -1,24 +1,28 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Repsaj.Bots.Domoticz.Logic.ApiConnector;
-using Repsaj.Bots.Domoticz.App.Logic.Helpers;
-using Repsaj.Bots.Domoticz.App.Logic.Logging;
-using Repsaj.Bots.Domoticz.App.Logic.Models;
+using Repsaj.Bots.Domoticz.Logic.Domoticz;
+using Repsaj.Bots.Domoticz.Logic.Helpers;
+using Repsaj.Bots.Domoticz.Logic.Logging;
+using Repsaj.Bots.Domoticz.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Repsaj.Bots.Domoticz.Logic.RequestHandler;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Repsaj.Bots.Domoticz.App.ViewModels
 {
     public class MainPageViewModel : NotificationBase
     {
-        private IApiConnector _apiConnector;
+        private IDomoticzManager _domoticzManager;
+        private IRequestHandler _requestHandler;
         private IDialogService _dialogService;
         private INavigationService _navigationService;
+        private IDomoticzSettingsService _settingsService;
 
         string _command;
         public string Command
@@ -57,21 +61,27 @@ namespace Repsaj.Bots.Domoticz.App.ViewModels
         #endregion
 
         public MainPageViewModel(
-            IApiConnector apiConnector,
+            IDomoticzManager domoticzManager,
+            IRequestHandler requestHandler,
             IDialogService dialogService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IDomoticzSettingsService settingsService)
         {
-            _apiConnector = apiConnector;
+            _domoticzManager = domoticzManager;
+            _requestHandler = requestHandler;
             _navigationService = navigationService;
             _dialogService = dialogService;
+            _settingsService = settingsService;
 
             Initialize();
         }
 
         public MainPageViewModel() : this(
-            new Design.ApiConnector(),
+            new Design.DomoticzManager(),
+            new Design.RequestHandler(),
             new DialogService(),
-            new NavigationService())
+            new NavigationService(),
+            new DomoticzSettingsService())
         {
 #if DEBUG
             if (ViewModelBase.IsInDesignModeStatic)
@@ -85,6 +95,8 @@ namespace Repsaj.Bots.Domoticz.App.ViewModels
         {
             try
             {
+                LoadSettings();
+
                 await RefreshLightsSwitches();
                 await RefreshScenes();
             }
@@ -94,9 +106,21 @@ namespace Repsaj.Bots.Domoticz.App.ViewModels
             }
         }
 
+        private void LoadSettings()
+        {
+            // initialize the settings from the application data store
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            _settingsService.FromDictionary(localSettings.Values);
+        }
+
+        private async Task SaveSetting()
+        {
+
+        }
+
         private async Task RefreshLightsSwitches()
         {
-            var lightsSwitches = await _apiConnector.GetLightSwitches();
+            var lightsSwitches = await _domoticzManager.GetLightSwitches();
 
             foreach (var lightSwitch in lightsSwitches)
             {
@@ -113,7 +137,7 @@ namespace Repsaj.Bots.Domoticz.App.ViewModels
 
         private async Task RefreshScenes()
         {
-            var scenes = await _apiConnector.GetScenes();
+            var scenes = await _domoticzManager.GetScenes();
 
             foreach (var scene in scenes)
             {
@@ -130,7 +154,7 @@ namespace Repsaj.Bots.Domoticz.App.ViewModels
 
         private Task ProcessCommand()
         {
-            return _apiConnector.RunCommand(_command);
+            return _requestHandler.HandleIncomingRequest(_command);
         }
     }
 }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <RootNamespace>Repsaj.Bots.Domoticz.App.Logic</RootNamespace>
+    <RootNamespace>Repsaj.Bots.Domoticz.Logic</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

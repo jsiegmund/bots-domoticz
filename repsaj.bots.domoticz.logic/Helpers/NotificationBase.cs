@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.Helpers
+namespace Repsaj.Bots.Domoticz.Logic.Helpers
 {
     public class NotificationBase : INotifyPropertyChanged
     {

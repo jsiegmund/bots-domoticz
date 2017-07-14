@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.Models
+namespace Repsaj.Bots.Domoticz.Logic.Models
 {
-    public class TurnOnRequestModel
+    public class SwitchRequestModel
     {
         public bool On { get; set; }
         public string Room { get; set; }

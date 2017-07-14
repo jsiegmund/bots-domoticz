@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.Helpers
+namespace Repsaj.Bots.Domoticz.Logic.Helpers
 {
     public sealed class TrulyObservableCollection<T> : ObservableCollection<T>
      where T : INotifyPropertyChanged

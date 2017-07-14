@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.Helpers
+namespace Repsaj.Bots.Domoticz.Logic.Helpers
 {
     public static class StringMatching
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Repsaj.Bots.Domoticz.App.Logic.Helpers;
+using Repsaj.Bots.Domoticz.Logic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +33,7 @@ namespace Repsaj.Bots.Domoticz.Tests
         };
 
         [TestMethod]
-        public void StringMatching_Success()
+        public void StringMatching_FindClosestMatch_Success()
         {
             string needle, result;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Repsaj.Bots.Domoticz.App.Logic.Models
+namespace Repsaj.Bots.Domoticz.Logic.Models
 {
     public class LightSwitchModel
     {
