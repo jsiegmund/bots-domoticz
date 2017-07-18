@@ -19,27 +19,25 @@ namespace Repsaj.Bots.Domoticz.Bot
     {
         public Dialog() : base(new LuisService(new LuisModelAttribute(Utils.GetAppSetting("LuisAppId"), Utils.GetAppSetting("LuisAPIKey"))))
         {
+
         }
 
         [LuisIntent("None")]
         public async Task NoneIntent(IDialogContext context, LuisResult result)
         {
-            IMessageActivity reply = context.MakeMessage();
-            reply.Text = "This is the text that Cortana displays.";
-            reply.Speak = "This is the text that Cortana will say.";
-            await context.PostAsync(reply);
+            string replyText = "I didn't understand that. You might want to rephrase.";
 
-            await context.PostAsync($"You have reached the none intent. You said: {result.Query}");
+            IMessageActivity reply = context.MakeMessage();
+            reply.Text = replyText;
+            reply.Speak = replyText;
+
+            await context.PostAsync(reply);
             context.Wait(MessageReceived);
         }
 
         [LuisIntent("HomeAutomation.TurnOn")]
         public async Task HomeAutomationTurnOn(IDialogContext context, LuisResult result)
         {
-            IMessageActivity reply = context.MakeMessage();
-            reply.Text = "I'm turning on things";
-            reply.Speak = "Ok, switching on!";
-
             IIntentHandler intentHandler = new Intents.IntentHandler();     // TODO: replace by dependency injection
             SwitchRequestModel model = intentHandler.HandleTurnOn(result);
             Uri gatewayUri = RequestUriHelper.ConstructUri(model);
@@ -49,32 +47,51 @@ namespace Repsaj.Bots.Domoticz.Bot
             {
                 action = new { type = "LaunchUri", uri = gatewayUri.ToString() }
             });
+
+            message.Text = $"Switching on {model.Device}";
+            message.Speak = "OK!";
             await context.PostAsync(message);
 
-            await context.PostAsync(reply);
             context.Wait(MessageReceived);
         }
 
         [LuisIntent("HomeAutomation.TurnOff")]
         public async Task HomeAutomationTurnOff(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync($"ActivateScene");
+            IIntentHandler intentHandler = new Intents.IntentHandler();     // TODO: replace by dependency injection
+            SwitchRequestModel model = intentHandler.HandleTurnOn(result);
+            Uri gatewayUri = RequestUriHelper.ConstructUri(model);
+
+            var message = context.MakeMessage() as IMessageActivity;
+            message.ChannelData = JObject.FromObject(new
+            {
+                action = new { type = "LaunchUri", uri = gatewayUri.ToString() }
+            });
+
+            message.Text = $"Switching off {model.Device}";
+            message.Speak = "OK!";
+            await context.PostAsync(message);
+
             context.Wait(MessageReceived);
         }
 
-        [LuisIntent("Activate Scene")]
+        [LuisIntent("HomeAutomation.ActivateScene")]
         public async Task ActivateSceneIntent(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync($"ActivateScene");
-            context.Wait(MessageReceived);
-        }
+            IIntentHandler intentHandler = new Intents.IntentHandler();     // TODO: replace by dependency injection
+            SceneRequestModel model = intentHandler.HandleScene(result);
+            Uri gatewayUri = RequestUriHelper.ConstructUri(model);
 
-        // Go to https://luis.ai and create a new intent, then train/publish your luis app.
-        // Finally replace "MyIntent" with the name of your newly created intent in the following handler
-        [LuisIntent("MyIntent")]
-        public async Task MyIntent(IDialogContext context, LuisResult result)
-        {
-            await context.PostAsync($"You have reached the MyIntent intent. You said: {result.Query}"); //
+            var message = context.MakeMessage() as IMessageActivity;
+            message.ChannelData = JObject.FromObject(new
+            {
+                action = new { type = "LaunchUri", uri = gatewayUri.ToString() }
+            });
+
+            message.Text = $"Switching scene {model.SceneName}";
+            message.Speak = "OK!";
+            await context.PostAsync(message);
+
             context.Wait(MessageReceived);
         }
     }
