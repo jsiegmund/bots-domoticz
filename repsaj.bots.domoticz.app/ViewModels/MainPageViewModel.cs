@@ -24,7 +24,7 @@ namespace Repsaj.Bots.Domoticz.App.ViewModels
         private INavigationService _navigationService;
         private IDomoticzSettingsService _settingsService;
 
-        string _command;
+        string _command = String.Empty;
         public string Command
         {
             get { return _command; }

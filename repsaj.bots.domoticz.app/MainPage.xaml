@@ -32,6 +32,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <TextBlock HorizontalAlignment="Left" Margin="274,10,0,0" TextWrapping="Wrap" Text="Scenes" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="777,279,0,0" TextWrapping="Wrap" Text="Domoticz Controller" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>
